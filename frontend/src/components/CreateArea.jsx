@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import Fab from '@mui/material/Fab';
-import Zoom from '@mui/material/Zoom';
-
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import Zoom from "@mui/material/Zoom";
 
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
-
   const [note, setNote] = useState({
     title: "",
     content: ""
@@ -24,37 +22,46 @@ function CreateArea(props) {
   }
 
   function submitNote(event) {
-    props.onAdd(note);
-    setNote({
-      title: "",
-      content: ""
-    });
+    // Only add note if title or content is not empty
+    if (note.title.trim() !== "" || note.content.trim() !== "") {
+      props.onAdd(note);
+      setNote({
+        title: "",
+        content: ""
+      });
+    }
     event.preventDefault();
   }
 
-  function expanded(){
+  function expand() {
     setExpanded(true);
   }
 
   return (
     <div>
       <form className="create-note">
-        {isExpanded?<input
-          name="title"
-          onChange={handleChange}
-          value={note.title}
-          placeholder="Title"
-        />:null}
+        {isExpanded && (
+          <input
+            name="title"
+            onChange={handleChange}
+            value={note.title}
+            placeholder="Title"
+            autoComplete="off"
+          />
+        )}
+
         <textarea
           name="content"
-          onClick={expanded}
+          onClick={expand}
           onChange={handleChange}
           value={note.content}
           placeholder="Take a note..."
-          rows={isExpanded?"3":"1"}
+          rows={isExpanded ? 3 : 1}
         />
         <Zoom in={isExpanded}>
-          <Fab onClick={submitNote}><NoteAddIcon/></Fab>
+          <Fab onClick={submitNote} aria-label="add">
+            <AddIcon />
+          </Fab>
         </Zoom>
       </form>
     </div>

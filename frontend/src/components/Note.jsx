@@ -12,14 +12,9 @@ function Note(props) {
       <h1>{props.title}</h1>
       <p>{props.content}</p>
       <IconButton 
-        onClick={handleClick} 
+        onClick={handleClick}
         aria-label="delete"
-        sx={{ 
-          color: "#f5ba13",
-          "&:focus": {
-            outline: "none"
-          }
-        }}
+        size="small"
       >
         <DeleteIcon />
       </IconButton>

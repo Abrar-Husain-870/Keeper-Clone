@@ -2,38 +2,107 @@
 <html>
 <head>
   <title>Generate App Icons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin: 10px;
+    }
+    .download-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #f5ba13;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
+  <h1>Keeper App Icon Generator</h1>
+  <p>Click the buttons below to download the app icons</p>
+  
   <div id="container">
-    <img id="svg" src="logo2.svg" style="display: none;">
-    <canvas id="canvas192" width="192" height="192"></canvas>
-    <canvas id="canvas512" width="512" height="512"></canvas>
+    <div>
+      <canvas id="canvas192" width="192" height="192"></canvas>
+      <br>
+      <a id="download192" class="download-btn">Download 192x192 Icon</a>
+    </div>
+    <div>
+      <canvas id="canvas512" width="512" height="512"></canvas>
+      <br>
+      <a id="download512" class="download-btn">Download 512x512 Icon</a>
+    </div>
   </div>
 
   <script>
     window.onload = function() {
-      const svgImg = document.getElementById('svg');
+      // Draw the 192x192 icon
+      const canvas192 = document.getElementById('canvas192');
+      const ctx192 = canvas192.getContext('2d');
+      drawKeeperIcon(ctx192, 192);
       
-      svgImg.onload = function() {
-        // Generate 192x192 icon
-        const canvas192 = document.getElementById('canvas192');
-        const ctx192 = canvas192.getContext('2d');
-        ctx192.fillStyle = '#f5ba13';
-        ctx192.fillRect(0, 0, 192, 192);
-        ctx192.drawImage(svgImg, 20, 20, 152, 152);
-        
-        // Generate 512x512 icon
-        const canvas512 = document.getElementById('canvas512');
-        const ctx512 = canvas512.getContext('2d');
-        ctx512.fillStyle = '#f5ba13';
-        ctx512.fillRect(0, 0, 512, 512);
-        ctx512.drawImage(svgImg, 56, 56, 400, 400);
-        
-        // Download the images
+      // Draw the 512x512 icon
+      const canvas512 = document.getElementById('canvas512');
+      const ctx512 = canvas512.getContext('2d');
+      drawKeeperIcon(ctx512, 512);
+      
+      // Set up download buttons
+      document.getElementById('download192').addEventListener('click', function() {
         downloadCanvas(canvas192, 'logo192.png');
+      });
+      
+      document.getElementById('download512').addEventListener('click', function() {
         downloadCanvas(canvas512, 'logo512.png');
-      };
+      });
     };
+    
+    function drawKeeperIcon(ctx, size) {
+      // Background
+      ctx.fillStyle = '#f5ba13';
+      ctx.fillRect(0, 0, size, size);
+      
+      // Draw a lightbulb icon (simple representation)
+      const padding = size * 0.2;
+      const iconSize = size - (padding * 2);
+      
+      // Bulb part
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      ctx.arc(size/2, size/2 - iconSize/6, iconSize/3, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Rays
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = size/20;
+      
+      // Draw rays
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI / 4);
+        const rayLength = size/4;
+        const startX = size/2 + Math.cos(angle) * (iconSize/3 + size/20);
+        const startY = size/2 - iconSize/6 + Math.sin(angle) * (iconSize/3 + size/20);
+        const endX = size/2 + Math.cos(angle) * (iconSize/3 + rayLength);
+        const endY = size/2 - iconSize/6 + Math.sin(angle) * (iconSize/3 + rayLength);
+        
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+      }
+      
+      // Base of bulb
+      ctx.fillStyle = 'white';
+      const baseWidth = iconSize/4;
+      ctx.fillRect(size/2 - baseWidth/2, size/2 + iconSize/6, baseWidth, iconSize/4);
+    }
     
     function downloadCanvas(canvas, filename) {
       const link = document.createElement('a');

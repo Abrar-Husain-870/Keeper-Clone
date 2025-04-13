@@ -68,7 +68,14 @@ footer p {
   width: 36px;
   height: 36px;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
+}
+
+.note button:focus,
+.note button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 form.create-note {

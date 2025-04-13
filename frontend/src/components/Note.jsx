@@ -1,8 +1,6 @@
 import React from "react";
-// import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import IconButton from '@mui/material/IconButton';
 
 function Note(props) {
   function handleClick() {
@@ -13,10 +11,18 @@ function Note(props) {
     <div className="note">
       <h1>{props.title}</h1>
       <p>{props.content}</p>
-      <Button onClick={handleClick} variant="outlined" startIcon={<DeleteIcon />}>
-        {/* <DeleteIcon/> */}
-        Delete
-      </Button>
+      <IconButton 
+        onClick={handleClick} 
+        aria-label="delete"
+        sx={{ 
+          color: "#f5ba13",
+          "&:focus": {
+            outline: "none"
+          }
+        }}
+      >
+        <DeleteIcon />
+      </IconButton>
     </div>
   );
 }

@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() { 
-  // Initialize with an empty array - no persistence between sessions
-  const [notes, setNotes] = useState([]);
+  // Initialize notes from localStorage or empty array if nothing is stored
+  const [notes, setNotes] = useState(() => {
+    const savedNotes = localStorage.getItem('notes');
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
+
+  // Save notes to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
 
   function addNote(newNote) {
     setNotes(prevNotes => [newNote, ...prevNotes]);

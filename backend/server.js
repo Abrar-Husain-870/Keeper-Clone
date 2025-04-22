@@ -11,11 +11,19 @@ const port = process.env.PORT || 3001;
 // In production, we'll specify the frontend URL
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://dkeeper-app.netlify.app', 'https://keeper-clone.netlify.app'] 
+    ? ['https://dkeeper-app.netlify.app', 'https://keeper-clone.netlify.app', 'https://keepon.netlify.app'] 
     : '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
+
+// Add CORS headers to all responses as a backup
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 app.use(express.json());
 

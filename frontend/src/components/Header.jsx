@@ -9,26 +9,22 @@ import NoteIcon from "@mui/icons-material/Note";
 function Header({ user, onLogout, currentView, onViewChange }) {
   return (
     <header style={{ 
-      display: 'flex', 
-      justifyContent: 'space-between', 
-      alignItems: 'center', 
-      width: '100vw',
-      minWidth: '100vw',
-      maxWidth: '100vw',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 1000,
-      boxSizing: 'border-box',
-      padding: window.innerWidth <= 768 ? '12px 16px' : '16px 32px',
-      backgroundColor: '#f5ba13',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      margin: '0 !important',
-      border: 'none',
-      outline: 'none',
-      transform: 'translateX(0)',
-      overflow: 'hidden'
+        display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1000,
+    boxSizing: 'border-box',
+    padding: window.innerWidth <= 768 ? '12px 16px' : '16px 32px',
+    backgroundColor: 'rgb(245, 186, 19)',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    border: 'none',
+    outline: 'none',
+    overflow: 'hidden'
     }}>
       <h1 style={{ 
         margin: 0, 

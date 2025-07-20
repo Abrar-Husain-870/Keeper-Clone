@@ -113,7 +113,7 @@ function MainApp() {
           </div>
         </>
       ) : (
-        <Trash />
+        <Trash onNoteRestored={fetchData} />
       )}
       
       <Footer />

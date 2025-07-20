@@ -5,7 +5,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import "./Trash.css";
 
-function Trash() {
+function Trash({ onNoteRestored }) {
   const [trashedNotes, setTrashedNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
@@ -32,6 +32,9 @@ function Trash() {
     try {
       await restoreNoteFromTrash(noteId);
       fetchTrashedNotes(); // Refresh the trash list
+      if (onNoteRestored) {
+        onNoteRestored(); // Refresh the main notes list
+      }
     } catch (error) {
       console.error('Error restoring note:', error);
     }

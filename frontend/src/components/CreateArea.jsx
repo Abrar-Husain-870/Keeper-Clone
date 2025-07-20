@@ -21,6 +21,10 @@ function CreateArea(props) {
         content: props.editNote.content
       });
       setExpanded(true);
+    } else {
+      // Reset form when not editing
+      setNote({ title: "", content: "" });
+      setExpanded(false);
     }
   }, [props.editNote]);
 

@@ -6,7 +6,7 @@ import CreateArea from "./CreateArea";
 import ExpandedNote from "./ExpandedNote";
 import Auth from "./Auth";
 import { AuthProvider, useAuth } from "../contexts/AuthContext";
-import { getNotes, createNote, updateNote, deleteNote as apiDeleteNote } from "../api";
+import { getUserNotes, addNote, updateNote, deleteNote } from "../firestoreApi";
 
 function MainApp() {
   const [notes, setNotes] = useState([]);
@@ -18,13 +18,13 @@ function MainApp() {
     if (editingNote) {
       await editNote(editingNote.id, note);
     } else {
-      await addNote(note);
+      await addNoteToFirestore(note);
     }
   }
 
-  async function addNote(newNote) {
+  async function addNoteToFirestore(newNote) {
     try {
-      await createNote(newNote);
+      await addNote(currentUser.uid, newNote);
       fetchData();
     } catch (error) {
       console.error('Error adding note:', error);
@@ -37,41 +37,44 @@ function MainApp() {
 
   async function fetchData() {
     try {
-      const data = await getNotes();
-      setNotes(data);
+      if (currentUser) {
+        const data = await getUserNotes(currentUser.uid);
+        setNotes(data);
+      }
     } catch (error) {
       console.error('Error fetching notes:', error);
     }
   }
 
-  async function editNote(id, updatedNote) {
+  async function editNote(noteId, updatedNote) {
     try {
-      await updateNote(id, updatedNote);
-      setNotes(prevNotes => prevNotes.map((note, index) => index === id ? updatedNote : note));
+      await updateNote(noteId, updatedNote);
+      fetchData(); // Refresh notes from Firestore
       setEditingNote(null);
     } catch (error) {
       console.error('Error updating note:', error);
     }
   }
 
-  function startEditing(id) {
-    const noteToEdit = notes.find((_, index) => index === id);
-    setEditingNote({ ...noteToEdit, id });
+  function startEditing(index) {
+    const noteToEdit = notes[index];
+    setEditingNote({ ...noteToEdit, id: noteToEdit.id });
     setExpandedNote(null); // Close expanded view when editing
   }
 
-  async function deleteNote(id) {
+  async function deleteNoteFromFirestore(index) {
     try {
-      await apiDeleteNote(id);
-      setNotes(prevNotes => prevNotes.filter((_, index) => index !== id));
+      const noteToDelete = notes[index];
+      await deleteNote(noteToDelete.id);
+      fetchData(); // Refresh notes from Firestore
     } catch (error) {
       console.error('Error deleting note:', error);
     }
   }
 
-  function handleNoteClick(id) {
-    if (!editingNote || editingNote.id !== id) {
-      const noteToExpand = notes.find((_, index) => index === id);
+  function handleNoteClick(index) {
+    if (!editingNote || editingNote.id !== notes[index].id) {
+      const noteToExpand = notes[index];
       setExpandedNote(noteToExpand);
     }
   }
@@ -91,7 +94,7 @@ function MainApp() {
           id={index}
           title={noteItem.title}
           content={noteItem.content}
-          onDelete={deleteNote}
+          onDelete={deleteNoteFromFirestore}
           onEdit={startEditing}
           onNoteClick={handleNoteClick}
         />

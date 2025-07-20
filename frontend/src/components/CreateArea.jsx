@@ -58,6 +58,11 @@ function CreateArea(props) {
       title: "",
       content: ""
     });
+    
+    // Collapse the create area back to original size
+    if (!props.isEditing) {
+      setExpanded(false);
+    }
   }
   
   function handleCancel(event) {

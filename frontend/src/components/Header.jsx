@@ -13,15 +13,20 @@ function Header({ user, onLogout, currentView, onViewChange }) {
       justifyContent: 'space-between', 
       alignItems: 'center', 
       width: '100vw',
-      position: 'relative',
-      left: '50%',
-      right: '50%',
-      marginLeft: '-50vw',
-      marginRight: '-50vw',
+      minWidth: '100vw',
+      maxWidth: '100vw',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1000,
       boxSizing: 'border-box',
       padding: '16px 32px',
       backgroundColor: '#f5ba13',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      margin: 0,
+      border: 'none',
+      outline: 'none'
     }}>
       <h1 style={{ 
         margin: 0, 

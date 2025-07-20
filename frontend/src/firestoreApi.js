@@ -43,11 +43,10 @@ export const addNote = async (userId, noteData) => {
  */
 export const getUserNotes = async (userId) => {
   try {
-    // Get only non-deleted notes for the user
+    // Get all notes for the user (no isDeleted filter to avoid index requirement)
     const q = query(
       collection(db, NOTES_COLLECTION),
-      where('userId', '==', userId),
-      where('isDeleted', '!=', true)
+      where('userId', '==', userId)
     );
     
     const querySnapshot = await getDocs(q);
@@ -55,12 +54,15 @@ export const getUserNotes = async (userId) => {
     
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      notes.push({
-        id: doc.id,
-        ...data,
-        // Convert Firestore timestamp to JavaScript Date for sorting
-        createdAt: data.createdAt?.toDate() || new Date()
-      });
+      // Filter out deleted notes on the client side
+      if (!data.isDeleted) {
+        notes.push({
+          id: doc.id,
+          ...data,
+          // Convert Firestore timestamp to JavaScript Date for sorting
+          createdAt: data.createdAt?.toDate() || new Date()
+        });
+      }
     });
     
     // Sort notes by creation date (newest first) on the client side
@@ -151,10 +153,10 @@ export const permanentlyDeleteNote = async (noteId) => {
  */
 export const getTrashedNotes = async (userId) => {
   try {
+    // Get all notes for the user and filter deleted ones on client side
     const q = query(
       collection(db, NOTES_COLLECTION),
-      where('userId', '==', userId),
-      where('isDeleted', '==', true)
+      where('userId', '==', userId)
     );
     
     const querySnapshot = await getDocs(q);
@@ -162,11 +164,14 @@ export const getTrashedNotes = async (userId) => {
     
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      notes.push({
-        id: doc.id,
-        ...data,
-        deletedAt: data.deletedAt?.toDate() || new Date()
-      });
+      // Only include deleted notes
+      if (data.isDeleted) {
+        notes.push({
+          id: doc.id,
+          ...data,
+          deletedAt: data.deletedAt?.toDate() || new Date()
+        });
+      }
     });
     
     // Sort notes by deletion date (newest first)

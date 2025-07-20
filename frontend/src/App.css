@@ -63,14 +63,71 @@ header h1 {
   margin: 0;
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.nav-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+}
+
+.nav-btn span {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .header-user-info {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Mobile Header User Info */
+/* Mobile Header Styles */
 @media (max-width: 768px) {
+  .header-controls {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .header-nav {
+    gap: 6px;
+  }
+  
+  .nav-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .nav-btn span {
+    display: none;
+  }
+  
   .header-user-info {
     gap: 8px;
     flex-wrap: wrap;
@@ -82,6 +139,21 @@ header h1 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-controls {
+    gap: 8px;
+  }
+  
+  .nav-btn {
+    padding: 6px 8px;
+  }
+  
+  .header-user-info span {
+    max-width: 120px;
+    font-size: 0.85rem;
   }
 }
 
@@ -264,12 +336,13 @@ footer p {
 /* Notes Container */
 .notes-container {
   padding: 0 20px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 20px;
   justify-content: center;
   max-width: 1200px;
   margin: 0 auto;
+  align-items: start;
 }
 
 /* Mobile Notes Container */
@@ -277,7 +350,7 @@ footer p {
   .notes-container {
     padding: 0 16px;
     gap: 16px;
-    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 
@@ -285,24 +358,24 @@ footer p {
   .notes-container {
     padding: 0 12px;
     gap: 12px;
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
+    justify-items: center;
   }
 }
 
 /* Individual Note Mobile Styles */
 @media (max-width: 768px) {
   .note {
-    width: calc(50% - 24px);
-    margin: 8px;
+    width: 100%;
+    margin: 0;
     min-width: 200px;
   }
 }
 
 @media (max-width: 480px) {
   .note {
-    width: calc(100% - 16px);
-    margin: 8px 0;
+    width: 100%;
+    margin: 0;
     float: none;
     max-width: 400px;
   }

@@ -5,13 +5,15 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 import ExpandedNote from "./ExpandedNote";
 import Auth from "./Auth";
+import Trash from "./Trash";
 import { AuthProvider, useAuth } from "../contexts/AuthContext";
-import { getUserNotes, addNote, updateNote, deleteNote } from "../firestoreApi";
+import { getUserNotes, addNote, updateNote, moveNoteToTrash } from "../firestoreApi";
 
 function MainApp() {
   const [notes, setNotes] = useState([]);
   const [editingNote, setEditingNote] = useState(null);
   const [expandedNote, setExpandedNote] = useState(null);
+  const [currentView, setCurrentView] = useState('notes'); // 'notes' or 'trash'
   const { currentUser, logout } = useAuth();
 
   async function handleNoteAction(note) {
@@ -65,10 +67,10 @@ function MainApp() {
   async function deleteNoteFromFirestore(index) {
     try {
       const noteToDelete = notes[index];
-      await deleteNote(noteToDelete.id);
+      await moveNoteToTrash(noteToDelete.id);
       fetchData(); // Refresh notes from Firestore
     } catch (error) {
-      console.error('Error deleting note:', error);
+      console.error('Error moving note to trash:', error);
     }
   }
 
@@ -85,20 +87,35 @@ function MainApp() {
 
   return (
     <div>
-      <Header user={currentUser} onLogout={logout} />
-      <CreateArea onAdd={handleNoteAction} isEditing={!!editingNote} editNote={editingNote} />
-      <ExpandedNote note={expandedNote} onClose={closeExpandedNote} />
-      {notes.map((noteItem, index) => (
-        <Note
-          key={index}
-          id={index}
-          title={noteItem.title}
-          content={noteItem.content}
-          onDelete={deleteNoteFromFirestore}
-          onEdit={startEditing}
-          onNoteClick={handleNoteClick}
-        />
-      ))}
+      <Header 
+        user={currentUser} 
+        onLogout={logout} 
+        currentView={currentView}
+        onViewChange={setCurrentView}
+      />
+      
+      {currentView === 'notes' ? (
+        <>
+          <CreateArea onAdd={handleNoteAction} isEditing={!!editingNote} editNote={editingNote} />
+          <ExpandedNote note={expandedNote} onClose={closeExpandedNote} />
+          <div className="notes-container">
+            {notes.map((noteItem, index) => (
+              <Note
+                key={noteItem.id || index}
+                id={index}
+                title={noteItem.title}
+                content={noteItem.content}
+                onDelete={deleteNoteFromFirestore}
+                onEdit={startEditing}
+                onNoteClick={handleNoteClick}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <Trash />
+      )}
+      
       <Footer />
     </div>
   );

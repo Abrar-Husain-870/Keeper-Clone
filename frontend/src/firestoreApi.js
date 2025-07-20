@@ -43,10 +43,11 @@ export const addNote = async (userId, noteData) => {
  */
 export const getUserNotes = async (userId) => {
   try {
-    // Simplified query without orderBy to avoid index requirement
+    // Get only non-deleted notes for the user
     const q = query(
       collection(db, NOTES_COLLECTION),
-      where('userId', '==', userId)
+      where('userId', '==', userId),
+      where('isDeleted', '!=', true)
     );
     
     const querySnapshot = await getDocs(q);
@@ -92,15 +93,88 @@ export const updateNote = async (noteId, updateData) => {
 };
 
 /**
- * Delete a specific note
+ * Move a note to trash (soft delete)
  * @param {string} noteId - The note's document ID
  * @returns {Promise<void>}
  */
-export const deleteNote = async (noteId) => {
+export const moveNoteToTrash = async (noteId) => {
+  try {
+    const noteRef = doc(db, NOTES_COLLECTION, noteId);
+    await updateDoc(noteRef, {
+      isDeleted: true,
+      deletedAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+  } catch (error) {
+    console.error('Error moving note to trash:', error);
+    throw error;
+  }
+};
+
+/**
+ * Restore a note from trash
+ * @param {string} noteId - The note's document ID
+ * @returns {Promise<void>}
+ */
+export const restoreNoteFromTrash = async (noteId) => {
+  try {
+    const noteRef = doc(db, NOTES_COLLECTION, noteId);
+    await updateDoc(noteRef, {
+      isDeleted: false,
+      deletedAt: null,
+      updatedAt: serverTimestamp()
+    });
+  } catch (error) {
+    console.error('Error restoring note from trash:', error);
+    throw error;
+  }
+};
+
+/**
+ * Permanently delete a note
+ * @param {string} noteId - The note's document ID
+ * @returns {Promise<void>}
+ */
+export const permanentlyDeleteNote = async (noteId) => {
   try {
     await deleteDoc(doc(db, NOTES_COLLECTION, noteId));
   } catch (error) {
-    console.error('Error deleting note:', error);
+    console.error('Error permanently deleting note:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get all trashed notes for a specific user
+ * @param {string} userId - The authenticated user's ID
+ * @returns {Promise<Array>} - Array of user's trashed notes
+ */
+export const getTrashedNotes = async (userId) => {
+  try {
+    const q = query(
+      collection(db, NOTES_COLLECTION),
+      where('userId', '==', userId),
+      where('isDeleted', '==', true)
+    );
+    
+    const querySnapshot = await getDocs(q);
+    const notes = [];
+    
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      notes.push({
+        id: doc.id,
+        ...data,
+        deletedAt: data.deletedAt?.toDate() || new Date()
+      });
+    });
+    
+    // Sort notes by deletion date (newest first)
+    notes.sort((a, b) => b.deletedAt - a.deletedAt);
+    
+    return notes;
+  } catch (error) {
+    console.error('Error getting trashed notes:', error);
     throw error;
   }
 };

@@ -16,20 +16,16 @@ header {
   align-items: center;
 }
 
-/* Mobile Header */
+/* Mobile Header Styles */
 @media (max-width: 768px) {
   header {
     padding: 12px 16px;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 8px;
   }
   
   header h1 {
     font-size: 1.5rem;
-  }
-  
-  .header-user-info {
-    font-size: 0.9rem;
   }
 }
 
@@ -44,6 +40,22 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* Mobile Header User Info */
+@media (max-width: 768px) {
+  .header-user-info {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .header-user-info span {
+    font-size: 0.9rem;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .user-email {
@@ -69,7 +81,7 @@ header h1 {
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
   padding: 15px;
-  transition: all 0.3s ease;
+  position: relative;
 }
 
 /* Mobile Create Area */
@@ -81,22 +93,11 @@ header h1 {
   }
 }
 
-/* Notes Container */
-.notes-container {
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Mobile Notes Container */
-@media (max-width: 768px) {
-  .notes-container {
-    padding: 0 16px;
-    grid-template-columns: 1fr;
-    gap: 16px;
+@media (max-width: 480px) {
+  .create-area {
+    width: calc(100% - 24px);
+    margin: 16px 12px;
+    padding: 10px;
   }
 }
 
@@ -111,14 +112,6 @@ header h1 {
   float: left;
   position: relative;
   transition: all 0.3s ease;
-}
-
-/* Mobile Note Styles */
-@media (max-width: 768px) {
-  .note {
-    width: calc(100% - 32px);
-    margin: 16px 16px;
-  }
 }
 
 .note:hover {
@@ -143,9 +136,18 @@ header h1 {
 }
 
 .note h1 {
-  font-size: 1.2em;
-  margin-bottom: 8px;
+  font-size: 1.1em;
+  margin-bottom: 6px;
   color: #333;
+  word-wrap: break-word;
+}
+
+/* Mobile Note Title */
+@media (max-width: 480px) {
+  .note h1 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
 }
 
 .note p {
@@ -156,33 +158,50 @@ header h1 {
   color: #555;
 }
 
-.note-buttons {
+.note-actions {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-/* Input and Textarea Styles */
-input, textarea {
-  border: none;
-  outline: none;
-  font-size: 1.2em;
-  font-family: inherit;
-  resize: none;
-}
-
-/* Mobile Input and Textarea */
+/* Mobile Note Actions - Always Visible */
 @media (max-width: 768px) {
-  input, textarea {
-    font-size: 1rem;
+  .note-actions {
+    opacity: 1;
+    position: relative;
+    bottom: auto;
+    right: auto;
+    justify-content: flex-end;
+    margin-top: 8px;
+    gap: 8px;
+  }
+}
+
+.note-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Note Action Buttons */
+@media (max-width: 768px) {
+  .note-actions button {
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
   }
   
-  .create-area input {
-    font-size: 1.1rem;
-  }
-  
-  .create-area textarea {
-    font-size: 1rem;
+  .note-actions button:hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -195,6 +214,114 @@ footer {
   height: 2.5rem;
 }
 
+/* Mobile Footer */
+@media (max-width: 768px) {
+  footer {
+    position: relative;
+    margin-top: 40px;
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    font-size: 0.9rem;
+    padding: 16px 0;
+  }
+}
+
 footer p {
   color: #ccc;
+}
+
+/* Notes Container */
+.notes-container {
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Mobile Notes Container */
+@media (max-width: 768px) {
+  .notes-container {
+    padding: 0 16px;
+    gap: 16px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .notes-container {
+    padding: 0 12px;
+    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Individual Note Mobile Styles */
+@media (max-width: 768px) {
+  .note {
+    width: calc(50% - 24px);
+    margin: 8px;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .note {
+    width: calc(100% - 16px);
+    margin: 8px 0;
+    float: none;
+    max-width: 400px;
+  }
+}
+
+/* Mobile Note Content */
+@media (max-width: 480px) {
+  .note p {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+}
+
+/* Create Area Input Mobile Styles */
+@media (max-width: 768px) {
+  .create-area input[type="text"],
+  .create-area textarea {
+    font-size: 1.1em;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-area input[type="text"],
+  .create-area textarea {
+    font-size: 1rem;
+    padding: 8px;
+  }
+}
+
+/* Create Area Button Mobile */
+@media (max-width: 768px) {
+  .create-area button {
+    right: 12px;
+    bottom: -20px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-area button {
+    right: 8px;
+    bottom: -22px;
+    width: 44px;
+    height: 44px;
+  }
 }

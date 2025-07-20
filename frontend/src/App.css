@@ -71,35 +71,44 @@ header h1 {
 
 .header-nav {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 
 .nav-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
+  gap: 4px;
+  background: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   color: #fff;
-  padding: 8px 12px;
-  border-radius: 20px;
+  padding: 6px 12px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 }
 
 .nav-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-btn.active {
-  background: rgba(255, 255, 255, 0.3);
+  background: #fff;
+  color: #f5ba13;
+  border-color: #fff;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.nav-btn span {
-  font-family: 'Montserrat', sans-serif;
+.nav-btn.active:hover {
+  background: #fff;
+  color: #f5ba13;
+  transform: translateY(-1px);
 }
 
 .header-user-info {
@@ -112,16 +121,17 @@ header h1 {
 @media (max-width: 768px) {
   .header-controls {
     gap: 12px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   
   .header-nav {
-    gap: 6px;
+    gap: 4px;
   }
   
   .nav-btn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    padding: 5px 8px;
+    font-size: 0.75rem;
+    border-width: 1px;
   }
   
   .nav-btn span {
@@ -148,7 +158,9 @@ header h1 {
   }
   
   .nav-btn {
-    padding: 6px 8px;
+    padding: 4px 6px;
+    min-width: 32px;
+    justify-content: center;
   }
   
   .header-user-info span {

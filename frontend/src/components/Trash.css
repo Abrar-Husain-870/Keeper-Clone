@@ -11,10 +11,11 @@
 }
 
 .trash-header h2 {
-  color: #333;
+  color: #f5ba13;
   font-size: 2rem;
   margin-bottom: 8px;
   font-family: 'McLaren', cursive;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .trash-subtitle {
@@ -69,14 +70,16 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  border-left: 4px solid #ff6b6b;
-  transition: all 0.2s ease;
+  border-left: 4px solid #f5ba13;
+  transition: all 0.3s ease;
   position: relative;
+  transform-origin: top left;
 }
 
 .trashed-note:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
+  transform: translateY(-2px) rotate(1deg);
+  border-left-color: #e6a512;
 }
 
 .trashed-note-content h3 {
@@ -126,21 +129,31 @@
 }
 
 .restore-btn {
-  color: #4caf50;
+  color: #f5ba13;
+  background: rgba(245, 186, 19, 0.1);
+  border: 1px solid rgba(245, 186, 19, 0.3);
+  border-radius: 50%;
 }
 
 .restore-btn:hover {
-  background: rgba(76, 175, 80, 0.1);
+  background: rgba(245, 186, 19, 0.2);
+  border-color: #f5ba13;
   transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(245, 186, 19, 0.3);
 }
 
 .delete-forever-btn {
-  color: #f44336;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 50%;
 }
 
 .delete-forever-btn:hover {
-  background: rgba(244, 67, 54, 0.1);
+  background: rgba(255, 107, 107, 0.2);
+  border-color: #ff6b6b;
   transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
 }
 
 /* Mobile Responsive */

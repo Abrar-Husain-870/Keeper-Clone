@@ -21,12 +21,14 @@ function Header({ user, onLogout, currentView, onViewChange }) {
       right: 0,
       zIndex: 1000,
       boxSizing: 'border-box',
-      padding: '16px 32px',
+      padding: window.innerWidth <= 768 ? '12px 16px' : '16px 32px',
       backgroundColor: '#f5ba13',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      margin: 0,
+      margin: '0 !important',
       border: 'none',
-      outline: 'none'
+      outline: 'none',
+      transform: 'translateX(0)',
+      overflow: 'hidden'
     }}>
       <h1 style={{ 
         margin: 0, 

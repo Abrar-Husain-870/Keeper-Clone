@@ -86,13 +86,14 @@ function MainApp() {
   }
 
   return (
-    <div className="main-app-container">
+    <>
       <Header 
         user={currentUser} 
         onLogout={logout} 
         currentView={currentView}
         onViewChange={setCurrentView}
       />
+      <div className="main-app-container">
       
       {currentView === 'notes' ? (
         <>
@@ -116,8 +117,9 @@ function MainApp() {
         <Trash onNoteRestored={fetchData} />
       )}
       
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

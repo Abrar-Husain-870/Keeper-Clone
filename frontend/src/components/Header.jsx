@@ -9,24 +9,13 @@ import NoteIcon from "@mui/icons-material/Note";
 function Header({ user, onLogout, currentView, onViewChange }) {
   return (
     <header className="header">
-      <h1 style={{ 
-        margin: 0, 
-        color: '#fff', 
-        fontFamily: 'McLaren, cursive', 
-        fontWeight: '200', 
-        fontSize: window.innerWidth <= 768 ? '1.5rem' : '1.8rem',
-        display: 'flex', 
-        alignItems: 'center', 
-        gap: '8px',
-        textShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
-        flexShrink: 0
-      }}>
-        <HighlightIcon style={{ fontSize: window.innerWidth <= 768 ? '1.8rem' : '2rem' }}/> 
+      <h1 className="header-title">
+        <HighlightIcon className="header-icon" /> 
         <span>Keeper</span>
       </h1>
       {user && (
-        <div className="header-controls" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div className="header-nav" style={{ display: 'flex', gap: '4px' }}>
+        <div className="header-controls">
+          <div className="header-nav">
             <button 
               onClick={() => onViewChange('notes')}
               className={`nav-btn ${currentView === 'notes' ? 'active' : ''}`}

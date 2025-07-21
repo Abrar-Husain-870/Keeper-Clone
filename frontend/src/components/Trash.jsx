@@ -51,17 +51,31 @@ function Trash({ onNoteRestored }) {
     }
   }
 
-  function formatDeletedDate(date) {
+  function formatDeletedDate(deletedDate) {
+    if (!deletedDate || !deletedDate.getTime) {
+      // It might be a Firestore timestamp object, try converting it.
+      if (deletedDate && typeof deletedDate.toDate === 'function') {
+        deletedDate = deletedDate.toDate();
+      } else {
+        return 'Deleted on an unknown date';
+      }
+    }
+
     const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 1) {
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfDeletedDay = new Date(deletedDate.getFullYear(), deletedDate.getMonth(), deletedDate.getDate());
+
+    const diffTime = startOfToday - startOfDeletedDay;
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) {
+      return 'Deleted today';
+    } else if (diffDays === 1) {
       return 'Deleted yesterday';
     } else if (diffDays < 7) {
       return `Deleted ${diffDays} days ago`;
     } else {
-      return `Deleted on ${date.toLocaleDateString()}`;
+      return `Deleted on ${deletedDate.toLocaleDateString()}`;
     }
   }
 

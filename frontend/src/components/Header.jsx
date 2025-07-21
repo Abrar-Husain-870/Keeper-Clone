@@ -67,17 +67,23 @@ function Header({ user, onLogout, currentView, onViewChange }) {
               <span>Trash</span>
             </button>
           </div>
-          <div className="header-user-info">
-            <span className="user-email">{user.email}</span>
-            <IconButton 
-              onClick={onLogout} 
-              aria-label="logout"
-              className="logout-btn"
-              style={{ color: '#fff' }}
-            >
-              <LogoutIcon />
-            </IconButton>
-          </div>
+          <IconButton 
+            onClick={onLogout} 
+            aria-label="logout"
+            className="logout-btn"
+            title="Sign Out"
+            style={{ 
+              color: '#fff',
+              marginLeft: 'auto',
+              padding: '8px',
+              border: '1px solid rgba(255, 255, 255, 0.5)',
+              borderRadius: '50%',
+              transition: 'all 0.3s ease',
+              background: 'rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <LogoutIcon style={{ fontSize: '1.2rem' }} />
+          </IconButton>
         </div>
       )}
     </header>

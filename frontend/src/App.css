@@ -41,7 +41,33 @@ body {
 }
 
 /* Responsive padding for main container */
+
+/* Header styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 80px;
+  box-sizing: border-box;
+  padding: 16px 32px;
+  background-color: rgb(245, 186, 19);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  outline: none;
+  overflow: hidden;
+  overflow-x: hidden;
+}
+
 @media (max-width: 768px) {
+  .header {
+    height: 70px;
+    padding: 12px 16px;
+  }
   .main-app-container {
     padding-top: 70px;
     min-height: calc(100vh - 70px);
@@ -49,15 +75,16 @@ body {
 }
 
 @media (max-width: 480px) {
+  .header {
+    height: 65px;
+    padding: 12px 16px;
+  }
   .main-app-container {
     padding-top: 65px;
     min-height: calc(100vh - 65px);
   }
 }
 
-/* Header styles are now handled inline in Header.jsx component */
-
-/* All header styles are now handled inline in Header.jsx component */
 
 /* Create Area Styles */
 .create-area {
@@ -252,12 +279,20 @@ body {
 }
 
 /* Footer Styles */
-footer {
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 1001;
   text-align: center;
-  width: 100%;
-  padding: 2rem 0;
-  margin-top: 3rem;
-  background: transparent;
+  color: #888;
+  font-size: 1rem;
+  background: #f5f5f5;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  padding: 0.75rem 0;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.04);
 }
 
 footer p {

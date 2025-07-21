@@ -86,7 +86,7 @@ function MainApp() {
   }
 
   return (
-    <div style={{ paddingTop: '80px' }}>
+    <div className="main-app-container">
       <Header 
         user={currentUser} 
         onLogout={logout} 

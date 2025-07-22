@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DoneIcon from '@mui/icons-material/Done';
 import Fab from '@mui/material/Fab';
 import Zoom from '@mui/material/Zoom';
@@ -7,13 +7,13 @@ import Button from '@mui/material/Button';
 
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(props.isEditing || false);
+  const textAreaRef = useRef(null);
 
   const [note, setNote] = useState({
     title: props.editNote ? props.editNote.title : "",
     content: props.editNote ? props.editNote.content : ""
   });
   
-  // Update note state when editNote prop changes
   useEffect(() => {
     if (props.editNote) {
       setNote({
@@ -21,8 +21,15 @@ function CreateArea(props) {
         content: props.editNote.content
       });
       setExpanded(true);
+      const timer = setTimeout(() => {
+        if (textAreaRef.current) {
+          textAreaRef.current.focus();
+          const len = textAreaRef.current.value.length;
+          textAreaRef.current.setSelectionRange(len, len);
+        }
+      }, 0);
+      return () => clearTimeout(timer);
     } else {
-      // Reset form when not editing
       setNote({ title: "", content: "" });
       setExpanded(false);
     }
@@ -92,6 +99,7 @@ function CreateArea(props) {
         )}
 
         <textarea
+          ref={textAreaRef}
           name="content"
           onClick={expand}
           onChange={handleChange}

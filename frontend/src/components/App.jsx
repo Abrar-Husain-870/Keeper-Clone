@@ -85,6 +85,8 @@ function MainApp() {
     setExpandedNote(null);
   }
 
+
+
   return (
     <>
       <Header 
@@ -106,6 +108,7 @@ function MainApp() {
                 id={index}
                 title={noteItem.title}
                 content={noteItem.content}
+                createdAt={noteItem.createdAt}
                 onDelete={deleteNoteFromFirestore}
                 onEdit={startEditing}
                 onNoteClick={handleNoteClick}

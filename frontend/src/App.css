@@ -43,8 +43,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Responsive padding for main container */
-
 /* Header styles - Override any conflicting styles */
 header.header {
   display: flex !important;
@@ -116,66 +114,6 @@ header.header {
   gap: 4px;
 }
 
-@media (max-width: 768px) {
-  header.header,
-  .header {
-    height: 70px !important;
-    padding: 12px 16px !important;
-  }
-  .header-title {
-    font-size: 1.5rem;
-  }
-  .header-icon {
-    font-size: 1.8rem;
-  }
-  .header-controls {
-    gap: 15px;
-  }
-  .main-app-container {
-    padding-top: 70px;
-    padding-bottom: 70px;
-    min-height: calc(100vh - 140px);
-  }
-  .footer {
-    height: 50px;
-    padding: 0.5rem 0;
-  }
-  footer p {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  header.header,
-  .header {
-    height: 60px !important;
-    padding: 6px 8px !important;
-  }
-  .header-title {
-    font-size: 1.1rem;
-    gap: 4px;
-  }
-  .header-icon {
-    font-size: 1.3rem;
-  }
-  .header-controls {
-    gap: 6px;
-  }
-  .main-app-container {
-    padding-top: 60px;
-    padding-bottom: 45px;
-    min-height: calc(100vh - 105px);
-  }
-  .footer {
-    height: 45px;
-    padding: 0.4rem 0;
-  }
-  footer p {
-    font-size: 0.75rem;
-  }
-}
-
-
 /* Create Area Styles */
 form.create-note {
   position: relative;
@@ -213,42 +151,6 @@ form.create-note {
   min-height: 3rem;
 }
 
-/* Responsive Create Area */
-@media (max-width: 768px) {
-  .create-area {
-    margin: 1.5rem 1rem;
-    padding: 0.875rem;
-    border-radius: 6px;
-  }
-  
-  .create-area input,
-  .create-area textarea {
-    font-size: 1rem;
-    padding: 0.625rem 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .create-area {
-    margin: 1rem 0.75rem;
-    padding: 0.75rem;
-  }
-  
-  .create-area input {
-    font-size: 1rem;
-  }
-  
-  .create-area textarea {
-    font-size: 0.95rem;
-    min-height: 2.5rem;
-  }
-
-  form.create-note {
-    width: auto; /* Let the element be flexible */
-    margin: 40px 1rem 20px 1rem; /* Increased top margin for mobile */
-  }
-}
-
 /* Notes Container */
 .notes-container {
   display: grid;
@@ -262,8 +164,46 @@ form.create-note {
   width: 100%;
 }
 
-/* Mobile responsiveness for notes container */
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Medium devices (tablets, 768px and down) */
 @media (max-width: 768px) {
+  header.header,
+  .header {
+    height: 70px !important;
+    padding: 12px 16px !important;
+  }
+  .header-title {
+    font-size: 1.5rem;
+  }
+  .header-icon {
+    font-size: 1.8rem;
+  }
+  .header-controls {
+    gap: 15px;
+  }
+  .main-app-container {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    min-height: calc(100vh - 140px);
+  }
+  .footer {
+    height: 50px;
+    padding: 0.5rem 0;
+  }
+  footer p {
+    font-size: 0.8rem;
+  }
+  .create-area {
+    margin: 1.5rem 1rem;
+    padding: 0.875rem;
+    border-radius: 6px;
+  }
+  .create-area input,
+  .create-area textarea {
+    font-size: 1rem;
+    padding: 0.625rem 0;
+  }
   .notes-container {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
@@ -271,32 +211,9 @@ form.create-note {
   }
 }
 
+/* Small devices (phones, 480px and down) */
 @media (max-width: 480px) {
-  .header.header {
-    height: 56px !important;
-    padding: 8px 12px !important;
-  }
-  .header-title {
-    font-size: 1.1rem;
-  }
-  .header-icon {
-    font-size: 1.3rem;
-  }
-  .main-app-container {
-    padding-top: 60px;
-    padding-bottom: 70px;
-    min-height: calc(100vh - 130px);
-  }
-  .notes-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-@media (max-width: 480px) {
+  /* Header */
   .header.header {
     flex-wrap: wrap !important;
     flex-direction: column !important;
@@ -312,6 +229,9 @@ form.create-note {
     min-width: 0;
     word-break: break-all;
     white-space: normal;
+  }
+  .header-icon {
+    font-size: 1.3rem;
   }
   .header-controls {
     flex: 1 1 100%;
@@ -329,6 +249,8 @@ form.create-note {
     white-space: nowrap;
     margin-right: 4px;
   }
+
+  /* Main content and layout */
   .main-app-container {
     padding-top: 62px;
     padding-bottom: 2.5rem;
@@ -336,6 +258,28 @@ form.create-note {
     min-width: 0;
     box-sizing: border-box;
   }
+  body, html, #root, .app {
+    overflow-x: hidden !important;
+  }
+
+  /* Create Note Area */
+  form.create-note {
+    width: auto;
+    margin: 40px 1rem 20px 1rem;
+  }
+  .create-area {
+    margin: 1rem 0.75rem;
+    padding: 0.75rem;
+  }
+  .create-area input {
+    font-size: 1rem;
+  }
+  .create-area textarea {
+    font-size: 0.95rem;
+    min-height: 2.5rem;
+  }
+
+  /* Notes Grid */
   .notes-container {
     padding: 0.25rem;
     gap: 0.5rem;
@@ -344,6 +288,8 @@ form.create-note {
     min-width: 0;
     box-sizing: border-box;
   }
+
+  /* Individual Note */
   .note {
     min-width: 0;
     width: 100%;
@@ -351,17 +297,7 @@ form.create-note {
     padding: 0.5rem;
     font-size: 0.95rem;
     border-radius: 6px;
-  }
-  body, html, #root, .app {
-    overflow-x: hidden !important;
-  }
-}
-
-  .note {
     min-height: 120px;
-    padding: 0.5rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
   }
   .note h1 {
     font-size: 0.95rem;
@@ -382,15 +318,18 @@ form.create-note {
     width: 28px;
     height: 28px;
   }
-  .create-area {
-    margin: 0.5rem 0.25rem;
-    padding: 0.5rem;
+
+  /* Footer */
+  .footer {
+    height: 45px;
+    padding: 0.4rem 0;
   }
-  body, html, #root, .app {
-    overflow-x: hidden !important;
+  footer p {
+    font-size: 0.75rem;
   }
 }
 
+/* Extra small devices (phones, 320px and down) */
 @media (max-width: 320px) {
   .header.header {
     height: 44px !important;
@@ -413,14 +352,14 @@ form.create-note {
     gap: 0.25rem;
   }
   .note {
-    min-height: 100px;
-    padding: 0.25rem;
+    min-height: 130px;
+    padding: 0.5rem;
     border-radius: 4px;
     font-size: 0.8rem;
   }
   .note h1 {
     font-size: 0.8rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
   }
   .note p {
     font-size: 0.7rem;
@@ -432,60 +371,55 @@ form.create-note {
     width: 22px;
     height: 22px;
   }
-  .create-area {
-    margin: 1rem 1rem;
+}
+
+/* Trash Section Mobile Responsiveness */
+@media (max-width: 480px) {
+  .trashed-note {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Pushes buttons to the end */
     padding: 0.5rem;
+    gap: 0.5rem;
   }
-  body, html, #root, .app {
-    overflow-x: hidden !important;
+
+  .trashed-note-content {
+    flex-grow: 1; /* Allows content to take available space */
+    min-width: 0; /* Prevents content from overflowing */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .trashed-note-actions {
+    display: flex;
+    flex-direction: row; /* Align buttons horizontally */
+    flex-shrink: 0; /* Prevents buttons from shrinking */
+    gap: 0.5rem;
   }
 }
 
-@media (max-width: 320px) {
-  .notes-container {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0.25rem;
-    gap: 0.25rem;
-  }
-  
-  .note {
-    min-height: 130px;
-    padding: 0.5rem;
-    border-radius: 4px;
-  }
-  
-  .note h1 {
-    font-size: 0.8rem;
-    margin-bottom: 0.3rem;
-  }
-  
-  .note p {
-    font-size: 0.75rem;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-  
-  .note-buttons button {
-    padding: 0.25rem;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .header-title {
-    font-size: 1rem;
-  }
-  
-  .header-icon {
-    font-size: 1.2rem;
-  }
-  
-  .create-area {
-    margin: 0.5rem 0.25rem;
-    padding: 0.5rem;
-  }
+
+.create-area textarea {
+  font-size: 1rem;
+  padding: 0.625rem 0;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Notes Grid Styles */
+
+.notes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }
 
 /* Note Styles */
+
 .note {
   background: #fff;
   border-radius: 8px;
@@ -498,11 +432,14 @@ form.create-note {
   cursor: pointer;
   min-height: 200px;
   box-sizing: border-box;
+  border-left: 4px solid #f5ba13;
+  transition: all 0.3s ease;
 }
 
 .note:hover {
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   transform: translateY(-5px);
+  border-left-color: #e6a512;
 }
 
 .note::before {
@@ -568,12 +505,22 @@ form.create-note {
   transform: scale(1.05);
 }
 
-.note-buttons {
+.note-footer {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.25rem;
+  justify-content: space-between;
+  align-items: center;
   margin-top: auto;
   padding-top: 0.5rem;
+}
+
+.note-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.note-buttons {
+  display: flex;
+  gap: 0.25rem;
 }
 
 .note-buttons button {
@@ -586,12 +533,12 @@ form.create-note {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: #f5ba13;
 }
 
 .note-buttons button:hover {
   background: rgba(0, 0, 0, 0.1);
-  color: #333;
+  color: #e2a700;
   transform: scale(1.1);
 }
 

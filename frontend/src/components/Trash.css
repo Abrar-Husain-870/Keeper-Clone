@@ -74,6 +74,14 @@
   transition: all 0.3s ease;
   position: relative;
   transform-origin: top left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150px; /* Ensure a minimum height */
+}
+
+.trashed-note-content {
+  flex-grow: 1; /* Allow content to take up available space */
 }
 
 .trashed-note:hover {
@@ -192,12 +200,26 @@
   
   .trashed-note {
     padding: 12px;
+    flex-direction: row !important; /* Use !important to force override */
+    align-items: center;
+    gap: 12px;
   }
-  
+
+  .trashed-note-content {
+    /* Ensure content area can shrink and wrap text */
+    flex: 1 1 auto;
+    min-width: 0; /* Allow shrinking below content size */
+    overflow-wrap: break-word;
+  }
+
+  .trashed-note-actions {
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+  }
+
   .trashed-note-content h3 {
     font-size: 1.1rem;
   }
-  
+
   .trashed-note-content p {
     font-size: 0.95rem;
   }
